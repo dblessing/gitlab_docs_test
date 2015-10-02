@@ -16,8 +16,7 @@ set :css_dir, 'assets/stylesheets'
 set :js_dir, 'assets/javascripts'
 set :images_dir, 'assets/images'
 set :fonts_dir, 'assets/fonts'
-set :layouts_dir, 'assets/layouts'
-set :layout_dir, 'assets/layouts'
+set :layouts_dir, 'assets/_layouts'
 
 # Activate the syntax highlighter
 activate :syntax
@@ -39,4 +38,14 @@ configure :build do
   # activate :relative_assets
   # activate :asset_hash
   # activate :gzip
+
+  ignore '.gitignore'
+  ignore 'CHANGELOG.html'
+  ignore 'CONTRIBUTING.html'
+  ignore 'font-selection.json'
+  ignore 'Gemfile'
+  ignore 'Gemfile.lock'
+  ignore 'Rakefile'
+  ignore 'README.html'
+  ignore 'LICENSE'
 end

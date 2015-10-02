@@ -82,18 +82,20 @@ under the License.
         <%= yield %>
         <%
            files = Dir['docs/**/**.md'].sort
+           ordered_topics = []
            current_page.data.ordered_topics && current_page.data.ordered_topics.each do |topic|
-             ordered_topics = files.select { |file| file.match("docs/#{topic}") }
-             ordered_topics.each do |topic_files|
+             ordered_topics << files.select { |file| file.match("docs/#{topic}") }
+           end
+           ordered_topics.flatten!
+           ordered_topics.each do |topic_file|
         %>
-          <%= partial topic_files %>
+          <%= partial topic_file unless File.directory?(topic_file) %>
         <%
-             end
-             files.reject { |file| ordered_topics.include?(file) }.each do |include|
+           end
+           files.reject { |file| ordered_topics.include?(file) }.each do |include|
         %>
           <%= partial include unless File.directory?(include) %>
         <%
-             end
            end
         %>
       </div>

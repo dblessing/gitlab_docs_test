@@ -1,6 +1,40 @@
 # GitLab Basics
 
-## Install and configure Git
+## Create an Account
+
+Before you can start using GitLab you need a user account. GitLab offers several
+ways to create an account or sign in, depending on how your GitLab instance is
+configured.
+
+### Create a GitLab account
+
+Create an account on GitLab by visiting the GitLab sign in page. For example,
+http://gitlab.com/users/sign_in
+
+Fill in the information in the 'New user? Create an account' box.
+
+![New User Sign Up](create-an-account/new_user_sign_up.png)
+
+Check your email to find the confirmation email. Click on the link in the email.
+
+![Confirmation Email](create-an-account/confirmation_email.png)
+
+If confirmation is successful, you should be signed in.
+
+### Third-party sign in
+
+Look for third-party icons on the sign in page to determine if your GitLab
+instance supports third-party sign ins. Examples include Google, Twitter,
+Github and BitBucket. For example, GitLab.com sign in page looks like the following.
+
+![Third-party Sign In](create-an-account/sign_in.png)
+
+Click on any one of these icons to use your third-party account with GitLab.
+You will be redirected to the third-party service to sign in and authorize
+GitLab. After successful authentication and authorization you will be redirected
+to GitLab and signed in.
+
+## Install and Configure Git
 
 > Check if Git is already installed
 
@@ -88,19 +122,22 @@ you want to use with GitLab.
 Before you can add your public key to your GitLab account you need to check if
 you have an SSH key pair. If not, you need to generate one.
 
-<aside class="notice">It is a best practice to use a password for an SSH key, but it is not
-required and you can skip creating a password by pressing enter. Note that
-the password you choose here can't be altered or retrieved. </aside>
+<aside class="notice">It is a best practice to enter a passphrase (password) when
+generating an SSH key, but it is not required. You can skip creating a password
+by pressing enter (using an empty password). Note that the password you choose
+here can't be altered without generating a new key pair. You will only need to
+provide this password the first time you use Git or SSH after logging in
+to your computer. You will not be asked every time you push, pull, or clone.</aside>
 
 ### Add your SSH Key to your GitLab account
 
-> Copy the contents of your SSH public key.
+> Copy the contents of your SSH public key
 
 ```bash
 cat ~/.ssh/id_rsa.pub
 ```
 
-> Copy everything including the `ssh-rsa` and `you@computer-name` parts.
+> Copy everything including the `ssh-rsa` and `you@computer-name` portion
 
 ```bash
 # Example public key as output by the previous command
@@ -110,19 +147,54 @@ ssh-rsa AAAAB3NzaC1yc2EAAAADAQEL17Ufacg8cDhlQMS5NhV8z3GHZdhCrZbl4gz you@example.
 First, copy the contents of your SSH public key. Then, from the GitLab Dashboard
 click on "Profile Settings"
 
-![Profile Settings](basicsimages/profile_settings_menu.png)
+![Profile Settings](gitlab-basics/profile_settings_menu.png)
 
 Click "SSH Keys":
 
-![SSH Keys](basicsimages/ssh_keys_profile_menu.png)
+![SSH Keys](gitlab-basics/ssh_keys_profile_menu.png)
 
 Click on the "Add SSH Key" button
 
-![Add SSH Key](basicsimages/add_ssh_key_button.png)
+![Add SSH Key](gitlab-basics/add_ssh_key_button.png)
 
 Paste your SSH public key in the "Key" text area. The title will be added automatically.
 Click "Add key" to save your public key.
 
-![Paste SSH Key](basicsimages/add_ssh_key.png)
+![Paste SSH Key](gitlab-basics/add_ssh_key.png)
 
 Now, you'll be able to use Git over SSH.
+
+## Create a Project
+
+Create your first project to start using GitLab. If this is your first project
+you will see the welcome message on the dashboard. Click 'New Project'.
+
+![New Project Welcome](gitlab-basics/welcome_new_project.png)
+
+Enter the project details and click 'Create project'.
+
+- The 'Project path' serves as both the project name
+and the URL.
+- The 'Description' is optional and is any text you wish to provide
+to describe your new project.
+- The 'Visibility Level' is very important. Set this correctly to determine
+who has access to your project.
+
+GitLab also supports importing existing projects from third-party repositories.
+Depending on how your GitLab instance is configured, some options may be greyed
+out. Ask your administrator to configure these integrations if you want
+to use one that is greyed out.
+
+![New Project Page](gitlab-basics/new_project_page.png)
+
+## Basic Git Commands
+
+(inc. basic CLI commands)
+
+## Other topics
+
+### Create a Merge Request
+
+### Group management
+
+### Fork a project (This is not 'basic')

@@ -9,7 +9,3 @@ ordered_topics:
 
 search: true
 ---
-
-# Introduction
-
-Welcome to GitLab documentation.
