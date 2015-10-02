@@ -1,0 +1,58 @@
+<h1 id="use-libravatar-service-with-gitlab">Use Libravatar service with GitLab</h1>
+
+<p>GitLab by default supports <a href="https://gravatar.com">Gravatar</a> avatar service.
+Libravatar is a service which delivers your avatar (profile picture) to other websites and their API is
+<a href="http://wiki.libravatar.org/api/">heavily based on gravatar</a>.</p>
+
+<p>This means that it is not complicated to switch to Libravatar avatar service or even self hosted Libravatar server.</p>
+
+<h1 id="configuration">Configuration</h1>
+
+<p>In <a href="https://gitlab.com/gitlab-org/gitlab-ce/blob/672bd3902d86b78d730cea809fce312ec49d39d7/config/gitlab.yml.example#L122">gitlab.yml gravatar section</a> set
+the configuration options as follows:</p>
+
+<h2 id="for-http">For HTTP</h2>
+<pre class="highlight yaml"><code>  <span class="s">gravatar</span><span class="pi">:</span>
+    <span class="s">enabled</span><span class="pi">:</span> <span class="s">true</span>
+    <span class="c1"># gravatar URLs: possible placeholders: %{hash} %{size} %{email}</span>
+    <span class="s">plain_url</span><span class="pi">:</span> <span class="s2">"</span><span class="s">http://cdn.libravatar.org/avatar/%{hash}?s=%{size}&amp;d=identicon"</span>
+</code></pre>
+
+<h2 id="for-https">For HTTPS</h2>
+<pre class="highlight yaml"><code>  <span class="s">gravatar</span><span class="pi">:</span>
+    <span class="s">enabled</span><span class="pi">:</span> <span class="s">true</span>
+    <span class="c1"># gravatar URLs: possible placeholders: %{hash} %{size} %{email}</span>
+    <span class="s">ssl_url</span><span class="pi">:</span> <span class="s2">"</span><span class="s">https://seccdn.libravatar.org/avatar/%{hash}?s=%{size}&amp;d=identicon"</span>
+</code></pre>
+
+<h2 id="self-hosted">Self-hosted</h2>
+
+<p>If you are <a href="http://wiki.libravatar.org/running_your_own/">running your own libravatar service</a> the URL will be different in the configuration
+but the important part is to provide the same placeholders so GitLab can parse the URL correctly.</p>
+
+<p>For example, you host a service on <code class="prettyprint">http://libravatar.example.com</code> the <code class="prettyprint">plain_url</code> you need to supply in <code class="prettyprint">gitlab.yml</code> is</p>
+
+<p><code class="prettyprint">http://libravatar.example.com/avatar/%{hash}?s=%{size}&amp;d=identicon</code></p>
+
+<h2 id="omnibus-gitlab-example">Omnibus-gitlab example</h2>
+
+<p>In <code class="prettyprint">/etc/gitlab/gitlab.rb</code>:</p>
+
+<h4 id="for-http">For http</h4>
+<pre class="highlight ruby"><code><span class="n">gitlab_rails</span><span class="p">[</span><span class="s1">'gravatar_enabled'</span><span class="p">]</span> <span class="o">=</span> <span class="kp">true</span>
+<span class="n">gitlab_rails</span><span class="p">[</span><span class="s1">'gravatar_plain_url'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"http://cdn.libravatar.org/avatar/%{hash}?s=%{size}&amp;d=identicon"</span>
+</code></pre>
+
+<h4 id="for-https">For https</h4>
+<pre class="highlight ruby"><code><span class="n">gitlab_rails</span><span class="p">[</span><span class="s1">'gravatar_enabled'</span><span class="p">]</span> <span class="o">=</span> <span class="kp">true</span>
+<span class="n">gitlab_rails</span><span class="p">[</span><span class="s1">'gravatar_ssl_url'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"https://seccdn.libravatar.org/avatar/%{hash}?s=%{size}&amp;d=identicon"</span>
+</code></pre>
+
+<p>Run <code class="prettyprint">sudo gitlab-ctl reconfigure</code> for changes to take effect.</p>
+
+<h2 id="default-url-for-missing-images">Default URL for missing images</h2>
+
+<p><a href="http://wiki.libravatar.org/api/">Libravatar supports different sets</a> of <code class="prettyprint">missing images</code> for emails not found on the Libravatar service.</p>
+
+<p>In order to use a different set other than <code class="prettyprint">identicon</code>, replace <code class="prettyprint">&amp;d=identicon</code> portion of the URL with another supported set.
+For example, you can use <code class="prettyprint">retro</code> set in which case the URL would look like: <code class="prettyprint">plain_url: &quot;http://cdn.libravatar.org/avatar/%{hash}?s=%{size}&amp;d=retro&quot;</code></p>

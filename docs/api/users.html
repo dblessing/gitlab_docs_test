@@ -1,0 +1,526 @@
+<h1 id="users">Users</h1>
+
+<h2 id="list-users">List users</h2>
+
+<p>Get a list of users.</p>
+
+<p>This function takes pagination parameters <code class="prettyprint">page</code> and <code class="prettyprint">per_page</code> to restrict the list of users.</p>
+
+<h3 id="for-normal-users">For normal users</h3>
+<pre class="highlight plaintext"><code>GET /users
+</code></pre>
+<pre class="highlight json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john_smith"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John Smith"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"avatar_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://localhost:3000/uploads/user/avatar/1/cd8.jpeg"</span><span class="p">,</span><span class="w">
+  </span><span class="err">}</span><span class="p">,</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jack_smith"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jack Smith"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"blocked"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"avatar_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://gravatar.com/../e32131cd8.jpeg"</span><span class="p">,</span><span class="w">
+  </span><span class="err">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<h3 id="for-admins">For admins</h3>
+<pre class="highlight plaintext"><code>GET /users
+</code></pre>
+<pre class="highlight json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john_smith"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john@example.com"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John Smith"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-05-23T08:00:58Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"bio"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"skype"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"linkedin"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"twitter"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"website_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"extern_uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john.smith"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"provider"</span><span class="p">:</span><span class="w"> </span><span class="s2">"provider_name"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"theme_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"color_scheme_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"is_admin"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"avatar_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://localhost:3000/uploads/user/avatar/1/cd8.jpeg"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"can_create_group"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"current_sign_in_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-03-19T13:12:15Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"two_factor_enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jack_smith"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jack@example.com"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jack Smith"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"blocked"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-05-23T08:01:01Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"bio"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"skype"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"linkedin"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"twitter"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"website_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"extern_uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jack.smith"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"provider"</span><span class="p">:</span><span class="w"> </span><span class="s2">"provider_name"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"theme_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"color_scheme_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"is_admin"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"avatar_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://localhost:3000/uploads/user/avatar/1/cd8.jpeg"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"can_create_group"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"can_create_project"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"projects_limit"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"current_sign_in_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-03-19T17:54:13Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"two_factor_enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<p>You can search for users by email or username with: <code class="prettyprint">/users?search=John</code></p>
+
+<p>Also see <code class="prettyprint">def search query</code> in <code class="prettyprint">app/models/user.rb</code>.</p>
+
+<h2 id="single-user">Single user</h2>
+
+<p>Get a single user.</p>
+
+<h3 id="for-user">For user</h3>
+<pre class="highlight plaintext"><code>GET /users/:id
+</code></pre>
+
+<p>Parameters:</p>
+
+<ul>
+<li><code class="prettyprint">id</code> (required) - The ID of a user</li>
+</ul>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john_smith"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John Smith"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"avatar_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://localhost:3000/uploads/user/avatar/1/cd8.jpeg"</span><span class="p">,</span><span class="w">
+</span><span class="err">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="for-admin">For admin</h3>
+<pre class="highlight plaintext"><code>GET /users/:id
+</code></pre>
+
+<p>Parameters:</p>
+
+<ul>
+<li><code class="prettyprint">id</code> (required) - The ID of a user</li>
+</ul>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john_smith"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john@example.com"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John Smith"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-05-23T08:00:58Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"bio"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"skype"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"linkedin"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"twitter"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"website_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"extern_uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john.smith"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"provider"</span><span class="p">:</span><span class="w"> </span><span class="s2">"provider_name"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"theme_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"color_scheme_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"is_admin"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"can_create_group"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"can_create_project"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"projects_limit"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h2 id="user-creation">User creation</h2>
+
+<p>Creates a new user. Note only administrators can create new users.</p>
+<pre class="highlight plaintext"><code>POST /users
+</code></pre>
+
+<p>Parameters:</p>
+
+<ul>
+<li><code class="prettyprint">email</code> (required)            - Email</li>
+<li><code class="prettyprint">password</code> (required)         - Password</li>
+<li><code class="prettyprint">username</code> (required)         - Username</li>
+<li><code class="prettyprint">name</code> (required)             - Name</li>
+<li><code class="prettyprint">skype</code> (optional)            - Skype ID</li>
+<li><code class="prettyprint">linkedin</code> (optional)         - LinkedIn</li>
+<li><code class="prettyprint">twitter</code> (optional)          - Twitter account</li>
+<li><code class="prettyprint">website_url</code> (optional)      - Website URL</li>
+<li><code class="prettyprint">projects_limit</code> (optional)   - Number of projects user can create</li>
+<li><code class="prettyprint">extern_uid</code> (optional)       - External UID</li>
+<li><code class="prettyprint">provider</code> (optional)         - External provider name</li>
+<li><code class="prettyprint">bio</code> (optional)              - User&rsquo;s biography</li>
+<li><code class="prettyprint">admin</code> (optional)            - User is admin - true or false (default)</li>
+<li><code class="prettyprint">can_create_group</code> (optional) - User can create groups - true or false</li>
+<li><code class="prettyprint">confirm</code> (optional)          - Require confirmation - true (default) or false</li>
+</ul>
+
+<h2 id="user-modification">User modification</h2>
+
+<p>Modifies an existing user. Only administrators can change attributes of a user.</p>
+<pre class="highlight plaintext"><code>PUT /users/:id
+</code></pre>
+
+<p>Parameters:</p>
+
+<ul>
+<li><code class="prettyprint">email</code>                       - Email</li>
+<li><code class="prettyprint">username</code>                    - Username</li>
+<li><code class="prettyprint">name</code>                        - Name</li>
+<li><code class="prettyprint">password</code>                    - Password</li>
+<li><code class="prettyprint">skype</code>                       - Skype ID</li>
+<li><code class="prettyprint">linkedin</code>                    - LinkedIn</li>
+<li><code class="prettyprint">twitter</code>                     - Twitter account</li>
+<li><code class="prettyprint">website_url</code>                 - Website URL</li>
+<li><code class="prettyprint">projects_limit</code>              - Limit projects each user can create</li>
+<li><code class="prettyprint">extern_uid</code>                  - External UID</li>
+<li><code class="prettyprint">provider</code>                    - External provider name</li>
+<li><code class="prettyprint">bio</code>                         - User&rsquo;s biography</li>
+<li><code class="prettyprint">admin</code> (optional)            - User is admin - true or false (default)</li>
+<li><code class="prettyprint">can_create_group</code> (optional) - User can create groups - true or false</li>
+</ul>
+
+<p>Note, at the moment this method does only return a 404 error,
+even in cases where a 409 (Conflict) would be more appropriate,
+e.g. when renaming the email address to some existing one.</p>
+
+<h2 id="user-deletion">User deletion</h2>
+
+<p>Deletes a user. Available only for administrators.
+This is an idempotent function, calling this function for a non-existent user id
+still returns a status code <code class="prettyprint">200 OK</code>.
+The JSON response differs if the user was actually deleted or not.
+In the former the user is returned and in the latter not.</p>
+<pre class="highlight plaintext"><code>DELETE /users/:id
+</code></pre>
+
+<p>Parameters:</p>
+
+<ul>
+<li><code class="prettyprint">id</code> (required) - The ID of the user</li>
+</ul>
+
+<h2 id="current-user">Current user</h2>
+
+<p>Gets currently authenticated user.</p>
+<pre class="highlight plaintext"><code>GET /user
+</code></pre>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john_smith"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john@example.com"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John Smith"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"private_token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dd34asd13as"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-05-23T08:00:58Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"bio"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"skype"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"linkedin"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"twitter"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"website_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"theme_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"color_scheme_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"is_admin"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"can_create_group"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"can_create_project"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"projects_limit"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h2 id="list-ssh-keys">List SSH keys</h2>
+
+<p>Get a list of currently authenticated user&rsquo;s SSH keys.</p>
+<pre class="highlight plaintext"><code>GET /user/keys
+</code></pre>
+<pre class="highlight json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Public key"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAIEAiPWx6WM4lhHNedGfBpPJNPpZ7yKu+dnn1SJejgt4596k6YjzGGphH2TUxwKzxcKDKKezwkpfnxPkSMkuEspGRt/aZZ9wa++Oi7Qkr8prgHc4soW6NUlfDzpvZK2H5E7eQaSeP3SAwGmQKUFHCddNaP0L+hM7zhFNzjFvpaMgJw0="</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-08-01T14:47:39.080Z"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Another Public key"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAIEAiPWx6WM4lhHNedGfBpPJNPpZ7yKu+dnn1SJejgt4596k6YjzGGphH2TUxwKzxcKDKKezwkpfnxPkSMkuEspGRt/aZZ9wa++Oi7Qkr8prgHc4soW6NUlfDzpvZK2H5E7eQaSeP3SAwGmQKUFHCddNaP0L+hM7zhFNzjFvpaMgJw0="</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-08-01T14:47:39.080Z"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<p>Parameters:</p>
+
+<ul>
+<li><strong>none</strong></li>
+</ul>
+
+<h2 id="list-ssh-keys-for-user">List SSH keys for user</h2>
+
+<p>Get a list of a specified user&rsquo;s SSH keys. Available only for admin</p>
+<pre class="highlight plaintext"><code>GET /users/:uid/keys
+</code></pre>
+
+<p>Parameters:</p>
+
+<ul>
+<li><code class="prettyprint">uid</code> (required) - id of specified user</li>
+</ul>
+
+<h2 id="single-ssh-key">Single SSH key</h2>
+
+<p>Get a single key.</p>
+<pre class="highlight plaintext"><code>GET /user/keys/:id
+</code></pre>
+
+<p>Parameters:</p>
+
+<ul>
+<li><code class="prettyprint">id</code> (required) - The ID of an SSH key</li>
+</ul>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Public key"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAIEAiPWx6WM4lhHNedGfBpPJNPpZ7yKu+dnn1SJejgt4596k6YjzGGphH2TUxwKzxcKDKKezwkpfnxPkSMkuEspGRt/aZZ9wa++Oi7Qkr8prgHc4soW6NUlfDzpvZK2H5E7eQaSeP3SAwGmQKUFHCddNaP0L+hM7zhFNzjFvpaMgJw0="</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-08-01T14:47:39.080Z"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h2 id="add-ssh-key">Add SSH key</h2>
+
+<p>Creates a new key owned by the currently authenticated user.</p>
+<pre class="highlight plaintext"><code>POST /user/keys
+</code></pre>
+
+<p>Parameters:</p>
+
+<ul>
+<li><code class="prettyprint">title</code> (required) - new SSH Key&rsquo;s title</li>
+<li><code class="prettyprint">key</code> (required)   - new SSH key</li>
+</ul>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-01-21T17:44:33.512Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ssh-dss AAAAB3NzaC1kc3MAAACBAMLrhYgI3atfrSD6KDas1b/3n6R/HP+bLaHHX6oh+L1vg31mdUqK0Ac/NjZoQunavoyzqdPYhFz9zzOezCrZKjuJDS3NRK9rspvjgM0xYR4d47oNZbdZbwkI4cTv/gcMlquRy0OvpfIvJtjtaJWMwTLtM5VhRusRuUlpH99UUVeXAAAAFQCVyX+92hBEjInEKL0v13c/egDCTQAAAIEAvFdWGq0ccOPbw4f/F8LpZqvWDydAcpXHV3thwb7WkFfppvm4SZte0zds1FJ+Hr8Xzzc5zMHe6J4Nlay/rP4ewmIW7iFKNBEYb/yWa+ceLrs+TfR672TaAgO6o7iSRofEq5YLdwgrwkMmIawa21FrZ2D9SPao/IwvENzk/xcHu7YAAACAQFXQH6HQnxOrw4dqf0NqeKy1tfIPxYYUZhPJfo9O0AmBW2S36pD2l14kS89fvz6Y1g8gN/FwFnRncMzlLY/hX70FSc/3hKBSbH6C6j8hwlgFKfizav21eS358JJz93leOakJZnGb8XlWvz1UJbwCsnR2VEY8Dz90uIk1l/UqHkA= loic@call"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ABC"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>Will return created key with status <code class="prettyprint">201 Created</code> on success. If an
+error occurs a <code class="prettyprint">400 Bad Request</code> is returned with a message explaining the error:</p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"fingerprint"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="s2">"has already been taken"</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"key"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="s2">"has already been taken"</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h2 id="add-ssh-key-for-user">Add SSH key for user</h2>
+
+<p>Create new key owned by specified user. Available only for admin</p>
+<pre class="highlight plaintext"><code>POST /users/:id/keys
+</code></pre>
+
+<p>Parameters:</p>
+
+<ul>
+<li><code class="prettyprint">id</code> (required)    - id of specified user</li>
+<li><code class="prettyprint">title</code> (required) - new SSH Key&rsquo;s title</li>
+<li><code class="prettyprint">key</code> (required)   - new SSH key</li>
+</ul>
+
+<p>Will return created key with status <code class="prettyprint">201 Created</code> on success, or <code class="prettyprint">404 Not found</code> on fail.</p>
+
+<h2 id="delete-ssh-key-for-current-user">Delete SSH key for current user</h2>
+
+<p>Deletes key owned by currently authenticated user.
+This is an idempotent function and calling it on a key that is already deleted
+or not available results in <code class="prettyprint">200 OK</code>.</p>
+<pre class="highlight plaintext"><code>DELETE /user/keys/:id
+</code></pre>
+
+<p>Parameters:</p>
+
+<ul>
+<li><code class="prettyprint">id</code> (required) - SSH key ID</li>
+</ul>
+
+<h2 id="delete-ssh-key-for-given-user">Delete SSH key for given user</h2>
+
+<p>Deletes key owned by a specified user. Available only for admin.</p>
+<pre class="highlight plaintext"><code>DELETE /users/:uid/keys/:id
+</code></pre>
+
+<p>Parameters:</p>
+
+<ul>
+<li><code class="prettyprint">uid</code> (required) - id of specified user</li>
+<li><code class="prettyprint">id</code> (required)  - SSH key ID</li>
+</ul>
+
+<p>Will return <code class="prettyprint">200 OK</code> on success, or <code class="prettyprint">404 Not found</code> if either user or key cannot be found.</p>
+
+<h2 id="list-emails">List emails</h2>
+
+<p>Get a list of currently authenticated user&rsquo;s emails.</p>
+<pre class="highlight plaintext"><code>GET /user/emails
+</code></pre>
+<pre class="highlight json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"email@example.com"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"email2@example.com"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<p>Parameters:</p>
+
+<ul>
+<li><strong>none</strong></li>
+</ul>
+
+<h2 id="list-emails-for-user">List emails for user</h2>
+
+<p>Get a list of a specified user&rsquo;s emails. Available only for admin</p>
+<pre class="highlight plaintext"><code>GET /users/:uid/emails
+</code></pre>
+
+<p>Parameters:</p>
+
+<ul>
+<li><code class="prettyprint">uid</code> (required) - id of specified user</li>
+</ul>
+
+<h2 id="single-email">Single email</h2>
+
+<p>Get a single email.</p>
+<pre class="highlight plaintext"><code>GET /user/emails/:id
+</code></pre>
+
+<p>Parameters:</p>
+
+<ul>
+<li><code class="prettyprint">id</code> (required) - email ID</li>
+</ul>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"email@example.com"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h2 id="add-email">Add email</h2>
+
+<p>Creates a new email owned by the currently authenticated user.</p>
+<pre class="highlight plaintext"><code>POST /user/emails
+</code></pre>
+
+<p>Parameters:</p>
+
+<ul>
+<li><code class="prettyprint">email</code> (required) - email address</li>
+</ul>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"email@example.com"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>Will return created email with status <code class="prettyprint">201 Created</code> on success. If an
+error occurs a <code class="prettyprint">400 Bad Request</code> is returned with a message explaining the error:</p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="s2">"has already been taken"</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h2 id="add-email-for-user">Add email for user</h2>
+
+<p>Create new email owned by specified user. Available only for admin</p>
+<pre class="highlight plaintext"><code>POST /users/:id/emails
+</code></pre>
+
+<p>Parameters:</p>
+
+<ul>
+<li><code class="prettyprint">id</code> (required)    - id of specified user</li>
+<li><code class="prettyprint">email</code> (required) - email address</li>
+</ul>
+
+<p>Will return created email with status <code class="prettyprint">201 Created</code> on success, or <code class="prettyprint">404 Not found</code> on fail.</p>
+
+<h2 id="delete-email-for-current-user">Delete email for current user</h2>
+
+<p>Deletes email owned by currently authenticated user.
+This is an idempotent function and calling it on a email that is already deleted
+or not available results in <code class="prettyprint">200 OK</code>.</p>
+<pre class="highlight plaintext"><code>DELETE /user/emails/:id
+</code></pre>
+
+<p>Parameters:</p>
+
+<ul>
+<li><code class="prettyprint">id</code> (required) - email ID</li>
+</ul>
+
+<h2 id="delete-email-for-given-user">Delete email for given user</h2>
+
+<p>Deletes email owned by a specified user. Available only for admin.</p>
+<pre class="highlight plaintext"><code>DELETE /users/:uid/emails/:id
+</code></pre>
+
+<p>Parameters:</p>
+
+<ul>
+<li><code class="prettyprint">uid</code> (required) - id of specified user</li>
+<li><code class="prettyprint">id</code> (required)  - email ID</li>
+</ul>
+
+<p>Will return <code class="prettyprint">200 OK</code> on success, or <code class="prettyprint">404 Not found</code> if either user or email cannot be found.</p>
+
+<h2 id="block-user">Block user</h2>
+
+<p>Blocks the specified user.  Available only for admin.</p>
+<pre class="highlight plaintext"><code>PUT /users/:uid/block
+</code></pre>
+
+<p>Parameters:</p>
+
+<ul>
+<li><code class="prettyprint">uid</code> (required) - id of specified user</li>
+</ul>
+
+<p>Will return <code class="prettyprint">200 OK</code> on success, or <code class="prettyprint">404 User Not Found</code> is user cannot be found.</p>
+
+<h2 id="unblock-user">Unblock user</h2>
+
+<p>Unblocks the specified user.  Available only for admin.</p>
+<pre class="highlight plaintext"><code>PUT /users/:uid/unblock
+</code></pre>
+
+<p>Parameters:</p>
+
+<ul>
+<li><code class="prettyprint">uid</code> (required) - id of specified user</li>
+</ul>
+
+<p>Will return <code class="prettyprint">200 OK</code> on success, or <code class="prettyprint">404 User Not Found</code> is user cannot be found.</p>

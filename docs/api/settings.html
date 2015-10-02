@@ -1,0 +1,78 @@
+<h1 id="application-settings">Application settings</h1>
+
+<p>This API allows you to read and modify GitLab instance application settings. </p>
+
+<h2 id="get-current-application-settings">Get current application settings:</h2>
+<pre class="highlight plaintext"><code>GET /application/settings
+</code></pre>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"default_projects_limit"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"signup_enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"signin_enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"gravatar_enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"sign_in_text"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-06-12T15:51:55.432Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-06-30T13:22:42.210Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"home_page_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"default_branch_protection"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"twitter_sharing_enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"restricted_visibility_levels"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+  </span><span class="nt">"max_attachment_size"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"session_expire_delay"</span><span class="p">:</span><span class="w"> </span><span class="mi">10080</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"default_project_visibility"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"default_snippet_visibility"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"restricted_signup_domains"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+  </span><span class="nt">"user_oauth_applications"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"after_sign_out_path"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h2 id="change-application-settings">Change application settings:</h2>
+<pre class="highlight plaintext"><code>PUT /application/settings
+</code></pre>
+
+<p>Parameters:</p>
+
+<ul>
+<li><code class="prettyprint">default_projects_limit</code> - project limit per user</li>
+<li><code class="prettyprint">signup_enabled</code> - enable registration</li>
+<li><code class="prettyprint">signin_enabled</code> - enable login via GitLab account</li>
+<li><code class="prettyprint">gravatar_enabled</code> - enable gravatar</li>
+<li><code class="prettyprint">sign_in_text</code> - text on login page</li>
+<li><code class="prettyprint">home_page_url</code> - redirect to this URL when not logged in</li>
+<li><code class="prettyprint">default_branch_protection</code> - determine if developers can push to master</li>
+<li><code class="prettyprint">twitter_sharing_enabled</code> - allow users to share project creation in twitter</li>
+<li><code class="prettyprint">restricted_visibility_levels</code> - restrict certain visibility levels</li>
+<li><code class="prettyprint">max_attachment_size</code> - limit attachment size</li>
+<li><code class="prettyprint">session_expire_delay</code> - session lifetime</li>
+<li><code class="prettyprint">default_project_visibility</code> - what visibility level new project receives</li>
+<li><code class="prettyprint">default_snippet_visibility</code> - what visibility level new snippet receives</li>
+<li><code class="prettyprint">restricted_signup_domains</code> - force people to use only corporate emails for signup</li>
+<li><code class="prettyprint">user_oauth_applications</code> - allow users to create oauth applicaitons</li>
+<li><code class="prettyprint">after_sign_out_path</code> - where redirect user after logout</li>
+</ul>
+
+<p>All parameters are optional. You can send only one that you want to change.</p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"default_projects_limit"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"signup_enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"signin_enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"gravatar_enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"sign_in_text"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-06-12T15:51:55.432Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-06-30T13:22:42.210Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"home_page_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"default_branch_protection"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"twitter_sharing_enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"restricted_visibility_levels"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+  </span><span class="nt">"max_attachment_size"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"session_expire_delay"</span><span class="p">:</span><span class="w"> </span><span class="mi">10080</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"default_project_visibility"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"default_snippet_visibility"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"restricted_signup_domains"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+  </span><span class="nt">"user_oauth_applications"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"after_sign_out_path"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>

@@ -1,0 +1,12 @@
+<h1 id="sidekiq-debugging">Sidekiq debugging</h1>
+
+<h2 id="log-arguments-to-sidekiq-jobs">Log arguments to Sidekiq jobs</h2>
+
+<p>If you want to see what arguments are being passed to Sidekiq jobs you can set
+the SIDEKIQ_LOG_ARGUMENTS environment variable.</p>
+<pre class="highlight plaintext"><code>SIDEKIQ_LOG_ARGUMENTS=1 bundle exec foreman start
+</code></pre>
+
+<p>It is not recommend to enable this setting in production because some Sidekiq
+jobs (such as sending a password reset email) take secret arguments (for
+example the password reset token).</p>

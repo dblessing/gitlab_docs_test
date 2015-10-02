@@ -1,0 +1,95 @@
+<h1 id="ci-setup">CI setup</h1>
+
+<p>This document describes what services we use for testing GitLab and GitLab CI.</p>
+
+<p>We currently use three CI services to test GitLab:</p>
+
+<ol>
+<li>GitLab CI on <a href="https://gitlab-ce.githost.io/projects/4/">GitHost.io</a> for the <a href="https://gitlab.com/gitlab-org/gitlab-ce">GitLab.com repo</a></li>
+<li>GitLab CI at ci.gitlab.org to test the private GitLab B.V. repo at dev.gitlab.org</li>
+<li><a href="https://semaphoreapp.com/gitlabhq/gitlabhq/">Semephore</a> for <a href="https://github.com/gitlabhq/gitlabhq">GitHub.com repo</a></li>
+</ol>
+
+<table><thead>
+<tr>
+<th>Software @ configuration being tested</th>
+<th>GitLab CI (ci.gitlab.org)</th>
+<th>GitLab CI (GitHost.io)</th>
+<th>Semaphore</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>GitLab CE @ MySQL</td>
+<td>✓</td>
+<td>✓ <a href="https://gitlab-ce.githost.io/projects/4">Core team can trigger builds</a></td>
+<td></td>
+</tr>
+<tr>
+<td>GitLab CE @ PostgreSQL</td>
+<td></td>
+<td></td>
+<td>✓ <a href="https://semaphoreapp.com/gitlabhq/gitlabhq/branches/master">Core team can trigger builds</a></td>
+</tr>
+<tr>
+<td>GitLab EE @ MySQL</td>
+<td>✓</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>GitLab CI @ MySQL</td>
+<td>✓</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>GitLab CI @ PostgreSQL</td>
+<td></td>
+<td></td>
+<td>✓</td>
+</tr>
+<tr>
+<td>GitLab CI Runner</td>
+<td>✓</td>
+<td></td>
+<td>✓</td>
+</tr>
+<tr>
+<td>GitLab Shell</td>
+<td>✓</td>
+<td></td>
+<td>✓</td>
+</tr>
+<tr>
+<td>GitLab Shell</td>
+<td>✓</td>
+<td></td>
+<td>✓</td>
+</tr>
+</tbody></table>
+
+<p>Core team has access to trigger builds if needed for GitLab CE.</p>
+
+<p>We use <a href="https://gitlab.com/gitlab-org/gitlab-ci/blob/master/doc/examples/build_script_gitlab_ce.md">these build scripts</a> for testing with GitLab CI.</p>
+
+<h1 id="build-configuration-on-semaphore-for-testing-the-github-com-repo">Build configuration on <a href="https://semaphoreapp.com/gitlabhq/gitlabhq/">Semaphore</a> for testing the <a href="https://github.com/gitlabhq/gitlabhq">GitHub.com repo</a></h1>
+
+<ul>
+<li>Language: Ruby</li>
+<li>Ruby version: 2.1.2</li>
+<li>database.yml: pg</li>
+</ul>
+
+<p>Build commands</p>
+<pre class="highlight shell"><code>sudo apt-get install cmake libicu-dev -y <span class="o">(</span>Setup<span class="o">)</span>
+bundle install --deployment --path vendor/bundle <span class="o">(</span>Setup<span class="o">)</span>
+cp config/gitlab.yml.example config/gitlab.yml <span class="o">(</span>Setup<span class="o">)</span>
+bundle <span class="nb">exec </span>rake db:create <span class="o">(</span>Setup<span class="o">)</span>
+bundle <span class="nb">exec </span>rake spinach <span class="o">(</span>Thread <span class="c">#1)</span>
+bundle <span class="nb">exec </span>rake spec <span class="o">(</span>thread <span class="c">#2)</span>
+bundle <span class="nb">exec </span>rake rubocop <span class="o">(</span>thread <span class="c">#3)</span>
+bundle <span class="nb">exec </span>rake brakeman <span class="o">(</span>thread <span class="c">#4)</span>
+bundle <span class="nb">exec </span>rake jasmine:ci <span class="o">(</span>thread <span class="c">#5)</span>
+</code></pre>
+
+<p>Use rubygems mirror.</p>

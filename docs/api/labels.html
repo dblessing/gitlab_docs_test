@@ -1,0 +1,80 @@
+<h1 id="labels">Labels</h1>
+
+<h2 id="list-labels">List labels</h2>
+
+<p>Get all labels for given project.</p>
+<pre class="highlight plaintext"><code>GET /projects/:id/labels
+</code></pre>
+<pre class="highlight json"><code><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Awesome"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"color"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#DD10AA"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Documentation"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"color"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#1E80DD"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Feature"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"color"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#11FF22"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bug"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"color"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#EE1122"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<h2 id="create-a-new-label">Create a new label</h2>
+
+<p>Creates a new label for given repository with given name and color.</p>
+<pre class="highlight plaintext"><code>POST /projects/:id/labels
+</code></pre>
+
+<p>Parameters:</p>
+
+<ul>
+<li><code class="prettyprint">id</code> (required) - The ID of a project</li>
+<li><code class="prettyprint">name</code> (required) - The name of the label</li>
+<li><code class="prettyprint">color</code> (required) -  Color of the label given in 6-digit hex notation with leading &rsquo;#&rsquo; sign (e.g. #FFAABB)</li>
+</ul>
+
+<p>It returns 200 and the newly created label, if the operation succeeds.
+If the label already exists, 409 and an error message is returned.
+If label parameters are invalid, 400 and an explaining error message is returned.</p>
+
+<h2 id="delete-a-label">Delete a label</h2>
+
+<p>Deletes a label given by its name.</p>
+<pre class="highlight plaintext"><code>DELETE /projects/:id/labels
+</code></pre>
+
+<ul>
+<li><code class="prettyprint">id</code> (required) - The ID of a project</li>
+<li><code class="prettyprint">name</code> (required) - The name of the label to be deleted</li>
+</ul>
+
+<p>It returns 200 if the label successfully was deleted, 400 for wrong parameters
+and 404 if the label does not exist.
+In case of an error, additionally an error message is returned.</p>
+
+<h2 id="edit-an-existing-label">Edit an existing label</h2>
+
+<p>Updates an existing label with new name or now color. At least one parameter
+is required, to update the label.</p>
+<pre class="highlight plaintext"><code>PUT /projects/:id/labels
+</code></pre>
+
+<p>Parameters:</p>
+
+<ul>
+<li><code class="prettyprint">id</code> (required) - The ID of a project</li>
+<li><code class="prettyprint">name</code> (required) - The name of the existing label</li>
+<li><code class="prettyprint">new_name</code> (optional) - The new name of the label</li>
+<li><code class="prettyprint">color</code> (optional) -  New color of the label given in 6-digit hex notation with leading &rsquo;#&rsquo; sign (e.g. #FFAABB)</li>
+</ul>
+
+<p>On success, this method returns 200 with the updated label.
+If required parameters are missing or parameters are invalid, 400 is returned.
+If the label to be updated is missing, 404 is returned.
+In case of an error, additionally an error message is returned.</p>

@@ -1,0 +1,130 @@
+<h1 id="gitlab-basics">GitLab Basics</h1>
+
+<h2 id="install-and-configure-git">Install and configure Git</h2>
+
+<blockquote>
+<p>Check if Git is already installed</p>
+</blockquote>
+<pre class="highlight shell"><code>git --version
+
+<span class="c"># If Git is installed the output will be similar to:</span>
+git version 2.3.8
+
+<span class="c"># If Git is not installed the output will be similar to:</span>
+-bash: git: <span class="nb">command </span>not found
+</code></pre>
+
+<blockquote>
+<p>Add your Git username and set your email</p>
+</blockquote>
+<pre class="highlight shell"><code>git config --global user.name <span class="s2">"Your Name"</span>
+git config --global user.email you@example.com
+</code></pre>
+
+<blockquote>
+<p>Verify your configuration information</p>
+</blockquote>
+<pre class="highlight shell"><code>git config --global --list
+
+<span class="c"># Result:</span>
+user.name<span class="o">=</span>Your Name
+user.email<span class="o">=</span>you@example.com
+</code></pre>
+
+<p>To interact with GitLab projects you will need to install the Git command
+line utility. This utility allows you to clone projects, push and pull code, and
+stay in sync with the central repository.</p>
+
+<h3 id="command-line-interface">Command Line Interface</h3>
+
+<p>Use a command line interface (also called a terminal or shell) to run the commands
+on the right. Depending on your operating system, find the application of your preference.
+Here are some suggestions.</p>
+
+<ul>
+<li><a href="http://blog.teamtreehouse.com/introduction-to-the-mac-os-x-command-line">Terminal</a> on Mac OSX</li>
+<li><a href="https://msysgit.github.io">GitBash</a> on Windows</li>
+<li><a href="http://www.howtogeek.com/140679/beginner-geek-how-to-start-using-the-linux-terminal/">Linux Terminal</a> on Linux</li>
+</ul>
+
+<aside class="notice">It is important to configure Git with your username and
+email address. Git and GitLab use this information to identify your changes.</aside>
+
+<h2 id="add-an-ssh-key-pair">Add an SSH Key Pair</h2>
+
+<blockquote>
+<p>Check if you already have an SSH key</p>
+</blockquote>
+<pre class="highlight shell"><code>cat ~/.ssh/id_rsa.pub
+
+<span class="c"># If you already have a key it will look something like this</span>
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAEAQDVvUplNVHBJLyezQ/hq4yzETyXiwkgHZbet9q8ftp+TcputKd7V1NCOuHGjfIPWF1 you@computer-name
+
+<span class="c"># If you do not have a key you will see an error like this</span>
+cat: /Users/you/.ssh/id_rsa.pub: No such file or directory
+</code></pre>
+
+<blockquote>
+<p>Generate a new SSH key pair if you received an error above</p>
+</blockquote>
+<pre class="highlight shell"><code>ssh-keygen -t rsa -b 4096 -C <span class="s2">"you@computer-name"</span>
+
+<span class="c"># You will be prompted for the following information. Press enter to accept the defaults. Defaults appear in parentheses.</span>
+Generating public/private rsa key pair.
+Enter file <span class="k">in </span>which to save the key <span class="o">(</span>/Users/you/.ssh/id_rsa<span class="o">)</span>:
+Enter passphrase <span class="o">(</span>empty <span class="k">for </span>no passphrase<span class="o">)</span>:
+Enter same passphrase again:
+Your identification has been saved <span class="k">in</span> /Users/you/.ssh/id_rsa.
+Your public key has been saved <span class="k">in</span> /Users/you/.ssh/id_rsa.pub.
+The key fingerprint is:
+39:fc:ce:94:f4:09:13:95:64:9a:65:c1:de:05:4d:01 you@computer-name
+</code></pre>
+
+<p>SSH keys allow you to interact with GitLab using the Git command line
+tool. Instead of using your username and password, the SSH key will securely
+authenticate you. You will need to complete these steps on each computer
+you want to use with GitLab.</p>
+
+<h3 id="generate-an-ssh-key-pair">Generate an SSH key pair</h3>
+
+<p>Before you can add your public key to your GitLab account you need to check if
+you have an SSH key pair. If not, you need to generate one.</p>
+
+<aside class="notice">It is a best practice to use a password for an SSH key, but it is not
+required and you can skip creating a password by pressing enter. Note that
+the password you choose here can&rsquo;t be altered or retrieved. </aside>
+
+<h3 id="add-your-ssh-key-to-your-gitlab-account">Add your SSH Key to your GitLab account</h3>
+
+<blockquote>
+<p>Copy the contents of your SSH public key.</p>
+</blockquote>
+<pre class="highlight shell"><code>cat ~/.ssh/id_rsa.pub
+</code></pre>
+
+<blockquote>
+<p>Copy everything including the <code class="prettyprint">ssh-rsa</code> and <code class="prettyprint">you@computer-name</code> parts.</p>
+</blockquote>
+<pre class="highlight shell"><code><span class="c"># Example public key as output by the previous command</span>
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQEL17Ufacg8cDhlQMS5NhV8z3GHZdhCrZbl4gz you@example.com
+</code></pre>
+
+<p>First, copy the contents of your SSH public key. Then, from the GitLab Dashboard
+click on &ldquo;Profile Settings&rdquo;</p>
+
+<p><img alt="Profile Settings" src="../assets/images/basicsimages/profile_settings_menu.png" /></p>
+
+<p>Click &ldquo;SSH Keys&rdquo;:</p>
+
+<p><img alt="SSH Keys" src="../assets/images/basicsimages/ssh_keys_profile_menu.png" /></p>
+
+<p>Click on the &ldquo;Add SSH Key&rdquo; button</p>
+
+<p><img alt="Add SSH Key" src="../assets/images/basicsimages/add_ssh_key_button.png" /></p>
+
+<p>Paste your SSH public key in the &ldquo;Key&rdquo; text area. The title will be added automatically.
+Click &ldquo;Add key&rdquo; to save your public key.</p>
+
+<p><img alt="Paste SSH Key" src="../assets/images/basicsimages/add_ssh_key.png" /></p>
+
+<p>Now, you&rsquo;ll be able to use Git over SSH.</p>

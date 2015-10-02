@@ -1,0 +1,29 @@
+<h1 id="issue-closing-pattern">Issue closing pattern</h1>
+
+<p>Here&rsquo;s how to close multiple issues in one commit message:</p>
+
+<p>If a commit message matches the regular expression below, all issues referenced from
+the matched text will be closed. This happens when the commit is pushed or merged
+into the default branch of a project.</p>
+
+<p>When not specified, the default issue_closing_pattern as shown below will be used:</p>
+<pre class="highlight shell"><code><span class="o">((</span>?:[Cc]los<span class="o">(</span>?:e[sd]?|ing<span class="o">)</span>|[Ff]ix<span class="o">(</span>?:e[sd]|ing<span class="o">)</span>?<span class="o">)</span> +<span class="o">(</span>?:<span class="o">(</span>?:issues? +<span class="o">)</span>?#<span class="se">\d</span>+<span class="o">(</span>?:<span class="o">(</span>?:, <span class="k">*</span>| +and +<span class="o">)</span>?<span class="o">))</span>+<span class="o">)</span>
+</code></pre>
+
+<p>For example:</p>
+<pre class="highlight plaintext"><code>git commit -m "Awesome commit message (Fix #20, Fixes #21 and Closes #22). This commit is also related to #17 and fixes #18, #19 and #23."
+</code></pre>
+
+<p>will close <code class="prettyprint">#20</code>, <code class="prettyprint">#21</code>, <code class="prettyprint">#22</code>, <code class="prettyprint">#18</code>, <code class="prettyprint">#19</code> and <code class="prettyprint">#23</code>, but <code class="prettyprint">#17</code> won&rsquo;t be closed
+as it does not match the pattern. It also works with multiline commit messages.</p>
+
+<p>Tip: you can test this closing pattern at <a href="http://rubular.com/r/Xmbexed1OJ">http://rubular.com</a>. Use this site
+to test your own patterns.</p>
+
+<h2 id="change-the-pattern">Change the pattern</h2>
+
+<p>For Omnibus installs you can change the default pattern in <code class="prettyprint">/etc/gitlab/gitlab.rb</code>:</p>
+<pre class="highlight plaintext"><code>issue_closing_pattern: '((?:[Cc]los(?:e[sd]|ing)|[Ff]ix(?:e[sd]|ing)?) +(?:(?:issues? +)?#\d+(?:(?:, *| +and +)?))+)'
+</code></pre>
+
+<p>For manual installs you can customize the pattern in <a href="https://gitlab.com/gitlab-org/gitlab-ce/blob/40c3675372320febf5264061c9bcd63db2dfd13c/config/gitlab.yml.example#L65">gitlab.yml</a>.</p>

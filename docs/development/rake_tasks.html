@@ -1,0 +1,27 @@
+<h1 id="rake-tasks-for-developers">Rake tasks for developers</h1>
+
+<h2 id="setup-db-with-developer-seeds">Setup db with developer seeds</h2>
+
+<p>Note that if your db user does not have advanced privileges you must create the db manually before running this command.</p>
+<pre class="highlight plaintext"><code>bundle exec rake setup
+</code></pre>
+
+<p>The <code class="prettyprint">setup</code> task is a alias for <code class="prettyprint">gitlab:setup</code>.
+This tasks calls <code class="prettyprint">db:setup</code> to create the database, calls <code class="prettyprint">add_limits_mysql</code> that adds limits to the database schema in case of a MySQL database and fianlly it calls <code class="prettyprint">db:seed_fu</code> to seed the database.
+Note: <code class="prettyprint">db:setup</code> calls <code class="prettyprint">db:seed</code> but this does nothing.</p>
+
+<h2 id="run-tests">Run tests</h2>
+
+<p>This runs all test suites present in GitLab.</p>
+<pre class="highlight plaintext"><code>bundle exec rake test
+</code></pre>
+
+<h2 id="generate-searchable-docs-for-source-code">Generate searchable docs for source code</h2>
+
+<p>You can find results under the <code class="prettyprint">doc/code</code> directory.</p>
+<pre class="highlight plaintext"><code>bundle exec rake gitlab:generate_docs
+</code></pre>
+
+<h2 id="generate-api-documentation-for-project-services-e-g-slack">Generate API documentation for project services (e.g. Slack)</h2>
+<pre class="highlight plaintext"><code>bundle exec rake services:doc
+</code></pre>

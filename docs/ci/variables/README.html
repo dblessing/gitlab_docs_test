@@ -1,0 +1,139 @@
+<h2 id="variables">Variables</h2>
+
+<p>When receiving a build from GitLab CI, the runner prepares the build environment.
+It starts by setting a list of <strong>predefined variables</strong> (Environment Variables) and a list of <strong>user-defined variables</strong></p>
+
+<p>The variables can be overwritten. They take precedence over each other in this order:
+1. Secure variables
+1. YAML-defined variables
+1. Predefined variables</p>
+
+<p>For example, if you define:
+1. API_TOKEN=SECURE as Secure Variable
+1. API_TOKEN=YAML as YAML-defined variable</p>
+
+<p>The API_TOKEN will take the Secure Variable value: <code class="prettyprint">SECURE</code>.</p>
+
+<h3 id="predefined-variables-environment-variables">Predefined variables (Environment Variables)</h3>
+
+<table><thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>CI</strong></td>
+<td>Mark that build is executed in CI environment</td>
+</tr>
+<tr>
+<td><strong>GITLAB_CI</strong></td>
+<td>Mark that build is executed in GitLab CI environment</td>
+</tr>
+<tr>
+<td><strong>CI_SERVER</strong></td>
+<td>Mark that build is executed in CI environment</td>
+</tr>
+<tr>
+<td><strong>CI_SERVER_NAME</strong></td>
+<td>CI server that is used to coordinate builds</td>
+</tr>
+<tr>
+<td><strong>CI_SERVER_VERSION</strong></td>
+<td>Not yet defined</td>
+</tr>
+<tr>
+<td><strong>CI_SERVER_REVISION</strong></td>
+<td>Not yet defined</td>
+</tr>
+<tr>
+<td><strong>CI_BUILD_REF</strong></td>
+<td>The commit revision for which project is built</td>
+</tr>
+<tr>
+<td><strong>CI_BUILD_BEFORE_SHA</strong></td>
+<td>The first commit that were included in push request</td>
+</tr>
+<tr>
+<td><strong>CI_BUILD_REF_NAME</strong></td>
+<td>The branch or tag name for which project is built</td>
+</tr>
+<tr>
+<td><strong>CI_BUILD_ID</strong></td>
+<td>The unique id of the current build that GitLab CI uses internally</td>
+</tr>
+<tr>
+<td><strong>CI_BUILD_REPO</strong></td>
+<td>The URL to clone the Git repository</td>
+</tr>
+<tr>
+<td><strong>CI_PROJECT_ID</strong></td>
+<td>The unique id of the current project that GitLab CI uses internally</td>
+</tr>
+<tr>
+<td><strong>CI_PROJECT_DIR</strong></td>
+<td>The full path where the repository is cloned and where the build is ran</td>
+</tr>
+</tbody></table>
+
+<p>Example values:</p>
+<pre class="highlight shell"><code><span class="nb">export </span><span class="nv">CI_BUILD_BEFORE_SHA</span><span class="o">=</span><span class="s2">"9df57456fa9de2a6d335ca5edf9750ed812b9df0"</span>
+<span class="nb">export </span><span class="nv">CI_BUILD_ID</span><span class="o">=</span><span class="s2">"50"</span>
+<span class="nb">export </span><span class="nv">CI_BUILD_REF</span><span class="o">=</span><span class="s2">"1ecfd275763eff1d6b4844ea3168962458c9f27a"</span>
+<span class="nb">export </span><span class="nv">CI_BUILD_REF_NAME</span><span class="o">=</span><span class="s2">"master"</span>
+<span class="nb">export </span><span class="nv">CI_BUILD_REPO</span><span class="o">=</span><span class="s2">"https://gitlab.com/gitlab-org/gitlab-ce.git"</span>
+<span class="nb">export </span><span class="nv">CI_PROJECT_DIR</span><span class="o">=</span><span class="s2">"/builds/gitlab-org/gitlab-ce"</span>
+<span class="nb">export </span><span class="nv">CI_PROJECT_ID</span><span class="o">=</span><span class="s2">"34"</span>
+<span class="nb">export </span><span class="nv">CI_SERVER</span><span class="o">=</span><span class="s2">"yes"</span>
+<span class="nb">export </span><span class="nv">CI_SERVER_NAME</span><span class="o">=</span><span class="s2">"GitLab CI"</span>
+<span class="nb">export </span><span class="nv">CI_SERVER_REVISION</span><span class="o">=</span><span class="s2">""</span>
+<span class="nb">export </span><span class="nv">CI_SERVER_VERSION</span><span class="o">=</span><span class="s2">""</span>
+</code></pre>
+
+<h3 id="yaml-defined-variables">YAML-defined variables</h3>
+
+<p><strong>This feature requires GitLab Runner 0.5.0 or higher</strong></p>
+
+<p>GitLab CI allows you to add to <code class="prettyprint">.gitlab-ci.yml</code> variables that are set in build environment.
+The variables are stored in repository and are meant to store non-sensitive project configuration, ie. RAILS_ENV or DATABASE_URL.</p>
+<pre class="highlight yaml"><code><span class="s">variables</span><span class="pi">:</span>
+  <span class="s">DATABASE_URL</span><span class="pi">:</span> <span class="s2">"</span><span class="s">postgres://postgres@postgres/my_database"</span>
+</code></pre>
+
+<p>These variables can be later used in all executed commands and scripts.</p>
+
+<p>The YAML-defined variables are also set to all created service containers, thus allowing to fine tune them.</p>
+
+<p>More information about Docker integration can be found in <a href="../docker/using_docker_images.md">Using Docker Images</a>.</p>
+
+<h3 id="user-defined-variables-secure-variables">User-defined variables (Secure Variables)</h3>
+
+<p><strong>This feature requires GitLab Runner 0.4.0 or higher</strong></p>
+
+<p>GitLab CI allows you to define per-project <strong>Secure Variables</strong> that are set in build environment. 
+The secure variables are stored out of the repository (the <code class="prettyprint">.gitlab-ci.yml</code>).
+These variables are securely stored in GitLab CI database and are hidden in the build log.
+It&rsquo;s desired method to use them for storing passwords, secret keys or whatever you want.</p>
+
+<p>Secure Variables can added by going to <code class="prettyprint">Project &gt; Variables &gt; Add Variable</code>.</p>
+
+<p>They will be available for all subsequent builds.</p>
+
+<h3 id="use-variables">Use variables</h3>
+
+<p>The variables are set as environment variables in build environment and are accessible with normal methods that are used to access such variables.
+In most cases the <strong>bash</strong> is used to execute build script.
+To access variables (predefined and user-defined) in bash environment, prefix the variable name with <code class="prettyprint">$</code>:
+<code class="prettyprint">
+job_name:
+  script:
+    - echo $CI_BUILD_ID
+</code></p>
+
+<p>You can also list all environment variables with <code class="prettyprint">export</code> command,
+but be aware that this will also expose value of all <strong>Secure Variables</strong> in build log:
+<code class="prettyprint">
+job_name:
+  script:
+    - export
+</code></p>

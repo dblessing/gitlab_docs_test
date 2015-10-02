@@ -1,0 +1,100 @@
+<h2 id="using-dpl-as-deployment-tool">Using Dpl as deployment tool</h2>
+
+<p>Dpl (dee-pee-ell) is a deploy tool made for continuous deployment that&rsquo;s developed and used by Travis CI, but can also be used with GitLab CI. </p>
+
+<p><strong>We recommend to use Dpl, if you&rsquo;re deploying to any of these of these services: https://github.com/travis-ci/dpl#supported-providers</strong>.</p>
+
+<h3 id="requirements">Requirements</h3>
+
+<p>To use Dpl you need at least Ruby 1.8.7 with ability to install gems.</p>
+
+<h3 id="basic-usage">Basic usage</h3>
+
+<p>The Dpl can be installed on any machine with:
+<code class="prettyprint">
+gem install dpl
+</code></p>
+
+<p>This allows you to test all commands from your shell, rather than having to test it on a CI server.</p>
+
+<p>If you don&rsquo;t have Ruby installed you can do it on Debian-compatible Linux with:
+<code class="prettyprint">
+apt-get update
+apt-get install ruby-dev
+</code></p>
+
+<p>The Dpl provides support for vast number of services, including: Heroku, Cloud Foundry, AWS/S3, and more.
+To use it simply define provider and any additional parameters required by the provider.</p>
+
+<p>For example if you want to use it to deploy your application to heroku, you need to specify <code class="prettyprint">heroku</code> as provider, specify <code class="prettyprint">api-key</code> and <code class="prettyprint">app</code>.
+There&rsquo;s more and all possible parameters can be found here: https://github.com/travis-ci/dpl#heroku</p>
+<pre class="highlight plaintext"><code>staging:
+  type: deploy
+  - gem install dpl
+  - dpl --provider=heroku --app=my-app-staging --api-key=$HEROKU_STAGING_API_KEY
+</code></pre>
+
+<p>In the above example we use Dpl to deploy <code class="prettyprint">my-app-staging</code> to Heroku server with api-key stored in <code class="prettyprint">HEROKU_STAGING_API_KEY</code> secure variable.</p>
+
+<p>To use different provider take a look at long list of <a href="https://github.com/travis-ci/dpl#supported-providers">Supported Providers</a>.</p>
+
+<h3 id="using-dpl-with-docker">Using Dpl with Docker</h3>
+
+<p>When you use GitLab Runner you most likely configured it to use your server&rsquo;s shell commands.
+This means that all commands are run in context of local user (ie. gitlab_runner or gitlab_ci_multi_runner).
+It also means that most probably in your Docker container you don&rsquo;t have the Ruby runtime installed.
+You will have to install it:
+<code class="prettyprint">
+staging:
+  type: deploy
+  - apt-get update -yq
+  - apt-get install -y ruby-dev
+  - gem install dpl
+  - dpl --provider=heroku --app=my-app-staging --api-key=$HEROKU_STAGING_API_KEY
+  only:
+  - master
+</code></p>
+
+<p>The first line <code class="prettyprint">apt-get update -yq</code> updates the list of available packages, where second <code class="prettyprint">apt-get install -y ruby-dev</code> install <code class="prettyprint">Ruby</code> runtime on system.
+The above example is valid for all Debian-compatible systems.</p>
+
+<h3 id="usage-in-staging-and-production">Usage in staging and production</h3>
+
+<p>It&rsquo;s pretty common in developer workflow to have staging (development) and production environment.
+If we consider above example: we would like to deploy <code class="prettyprint">master</code> branch to <code class="prettyprint">staging</code> and <code class="prettyprint">all tags</code> to <code class="prettyprint">production</code> environment.
+The final <code class="prettyprint">.gitlab-ci.yml</code> for that setup would look like this:</p>
+<pre class="highlight plaintext"><code>staging:
+  type: deploy
+  - gem install dpl
+  - dpl --provider=heroku --app=my-app-staging --api-key=$HEROKU_STAGING_API_KEY
+  only:
+  - master
+
+production:
+  type: deploy
+  - gem install dpl
+  - dpl --provider=heroku --app=my-app-production --api-key=$HEROKU_PRODUCTION_API_KEY
+  only:
+  - tags
+</code></pre>
+
+<p>We created two deploy jobs that are executed on different events:
+1. <code class="prettyprint">staging</code> is executed for all commits that were pushed to <code class="prettyprint">master</code> branch,
+2. <code class="prettyprint">production</code> is executed for all pushed tags.</p>
+
+<p>We also use two secure variables:
+1. <code class="prettyprint">HEROKU_STAGING_API_KEY</code> - Heroku API key used to deploy staging app,
+2. <code class="prettyprint">HEROKU_PRODUCTION_API_KEY</code> - Heroku API key used to deploy production app.</p>
+
+<h3 id="storing-api-keys">Storing API keys</h3>
+
+<p>In GitLab CI 7.12 a new feature was introduced: Secure Variables.
+Secure Variables can added by going to <code class="prettyprint">Project &gt; Variables &gt; Add Variable</code>. 
+<strong>This feature requires <code class="prettyprint">gitlab-runner</code> with version equal or greater than 0.4.0.</strong>
+The variables that are defined in the project settings are send along with the build script to the runner.
+The secure variables are stored out of the repository. Never store secrets in your projects&rsquo; .gitlab-ci.yml.
+It is also important that secret&rsquo;s value is hidden in the build log.</p>
+
+<p>You access added variable by prefixing it&rsquo;s name with <code class="prettyprint">$</code> (on non-Windows runners) or <code class="prettyprint">%</code> (for Windows Batch runners):
+1. <code class="prettyprint">$SECRET_VARIABLE</code> - use it for non-Windows runners
+2. <code class="prettyprint">%SECRET_VARIABLE%</code> - use it for Windows Batch runners</p>

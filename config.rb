@@ -16,7 +16,8 @@ set :css_dir, 'assets/stylesheets'
 set :js_dir, 'assets/javascripts'
 set :images_dir, 'assets/images'
 set :fonts_dir, 'assets/fonts'
-set :layouts_dir, 'assets/_layouts'
+set :layouts_dir, 'assets/layouts'
+set :layout_dir, 'assets/layouts'
 
 # Activate the syntax highlighter
 activate :syntax
@@ -28,8 +29,8 @@ activate :autoprefixer do |config|
 end
 
 # Github pages require relative links
-# activate :relative_assets
-# set :relative_links, true
+activate :relative_assets
+set :relative_links, true
 
 # Build Configuration
 configure :build do
@@ -38,14 +39,4 @@ configure :build do
   # activate :relative_assets
   # activate :asset_hash
   # activate :gzip
-
-  ignore '.gitignore'
-  ignore 'CHANGELOG.html'
-  ignore 'CONTRIBUTING.html'
-  ignore 'font-selection.json'
-  ignore 'Gemfile'
-  ignore 'Gemfile.lock'
-  ignore 'Rakefile'
-  ignore 'README.html'
-  ignore 'LICENSE'
 end

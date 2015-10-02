@@ -1,0 +1,222 @@
+<h1 id="issues">Issues</h1>
+
+<h2 id="list-issues">List issues</h2>
+
+<p>Get all issues created by authenticated user. This function takes pagination parameters
+<code class="prettyprint">page</code> and <code class="prettyprint">per_page</code> to restrict the list of issues.</p>
+<pre class="highlight plaintext"><code>GET /issues
+GET /issues?state=opened
+GET /issues?state=closed
+GET /issues?labels=foo
+GET /issues?labels=foo,bar
+GET /issues?labels=foo,bar&amp;state=opened
+</code></pre>
+
+<p>Parameters:</p>
+
+<ul>
+<li><code class="prettyprint">state</code> (optional) - Return <code class="prettyprint">all</code> issues or just those that are <code class="prettyprint">opened</code> or <code class="prettyprint">closed</code></li>
+<li><code class="prettyprint">labels</code> (optional) - Comma-separated list of label names</li>
+<li><code class="prettyprint">order_by</code> (optional) - Return requests ordered by <code class="prettyprint">created_at</code> or <code class="prettyprint">updated_at</code> fields. Default is <code class="prettyprint">created_at</code></li>
+<li><code class="prettyprint">sort</code> (optional) - Return requests sorted in <code class="prettyprint">asc</code> or <code class="prettyprint">desc</code> order. Default is <code class="prettyprint">desc</code></li>
+</ul>
+<pre class="highlight json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">43</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"iid"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"project_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4xx/5xx pages"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"labels"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"milestone"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"assignee"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"author"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john_smith"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john@example.com"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John Smith"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-05-23T08:00:58Z"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"closed"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-07-02T17:53:12Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-07-02T17:53:12Z"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"iid"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"project_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Add user settings"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"labels"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="s2">"feature"</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"milestone"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"v1.0"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"due_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-07-20"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"reopened"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-07-04T13:42:48Z"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-07-04T13:42:48Z"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"assignee"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jack_smith"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jack@example.com"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jack Smith"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-05-23T08:01:01Z"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"author"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john_smith"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john@example.com"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John Smith"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-05-23T08:00:58Z"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"opened"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-07-12T13:43:19Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-06-28T12:58:06Z"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<h2 id="list-project-issues">List project issues</h2>
+
+<p>Get a list of project issues. This function accepts pagination parameters <code class="prettyprint">page</code> and <code class="prettyprint">per_page</code>
+to return the list of project issues.</p>
+<pre class="highlight plaintext"><code>GET /projects/:id/issues
+GET /projects/:id/issues?state=opened
+GET /projects/:id/issues?state=closed
+GET /projects/:id/issues?labels=foo
+GET /projects/:id/issues?labels=foo,bar
+GET /projects/:id/issues?labels=foo,bar&amp;state=opened
+GET /projects/:id/issues?milestone=1.0.0
+GET /projects/:id/issues?milestone=1.0.0&amp;state=opened
+GET /projects/:id/issues?iid=42
+</code></pre>
+
+<p>Parameters:</p>
+
+<ul>
+<li><code class="prettyprint">id</code> (required) - The ID of a project</li>
+<li><code class="prettyprint">iid</code> (optional) - Return the issue having the given <code class="prettyprint">iid</code></li>
+<li><code class="prettyprint">state</code> (optional) - Return <code class="prettyprint">all</code> issues or just those that are <code class="prettyprint">opened</code> or <code class="prettyprint">closed</code></li>
+<li><code class="prettyprint">labels</code> (optional) - Comma-separated list of label names</li>
+<li><code class="prettyprint">milestone</code> (optional) - Milestone title</li>
+<li><code class="prettyprint">order_by</code> (optional) - Return requests ordered by <code class="prettyprint">created_at</code> or <code class="prettyprint">updated_at</code> fields. Default is <code class="prettyprint">created_at</code></li>
+<li><code class="prettyprint">sort</code> (optional) - Return requests sorted in <code class="prettyprint">asc</code> or <code class="prettyprint">desc</code> order. Default is <code class="prettyprint">desc</code></li>
+</ul>
+
+<h2 id="single-issue">Single issue</h2>
+
+<p>Gets a single project issue.</p>
+<pre class="highlight plaintext"><code>GET /projects/:id/issues/:issue_id
+</code></pre>
+
+<p>Parameters:</p>
+
+<ul>
+<li><code class="prettyprint">id</code> (required) - The ID of a project</li>
+<li><code class="prettyprint">issue_id</code> (required) - The ID of a project issue</li>
+</ul>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"iid"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"project_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Add user settings"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"labels"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"feature"</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nt">"milestone"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"v1.0"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"due_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-07-20"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"closed"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-07-04T13:42:48Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-07-04T13:42:48Z"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"assignee"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jack_smith"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jack@example.com"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jack Smith"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-05-23T08:01:01Z"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"author"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john_smith"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john@example.com"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John Smith"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-05-23T08:00:58Z"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"opened"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-07-12T13:43:19Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-06-28T12:58:06Z"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h2 id="new-issue">New issue</h2>
+
+<p>Creates a new project issue.</p>
+<pre class="highlight plaintext"><code>POST /projects/:id/issues
+</code></pre>
+
+<p>Parameters:</p>
+
+<ul>
+<li><code class="prettyprint">id</code> (required) - The ID of a project</li>
+<li><code class="prettyprint">title</code> (required) - The title of an issue</li>
+<li><code class="prettyprint">description</code> (optional) - The description of an issue</li>
+<li><code class="prettyprint">assignee_id</code> (optional) - The ID of a user to assign issue</li>
+<li><code class="prettyprint">milestone_id</code> (optional) - The ID of a milestone to assign issue</li>
+<li><code class="prettyprint">labels</code> (optional) - Comma-separated label names for an issue</li>
+</ul>
+
+<p>If the operation is successful, 200 and the newly created issue is returned.
+If an error occurs, an error number and a message explaining the reason is returned.</p>
+
+<h2 id="edit-issue">Edit issue</h2>
+
+<p>Updates an existing project issue. This function is also used to mark an issue as closed.</p>
+<pre class="highlight plaintext"><code>PUT /projects/:id/issues/:issue_id
+</code></pre>
+
+<p>Parameters:</p>
+
+<ul>
+<li><code class="prettyprint">id</code> (required) - The ID of a project</li>
+<li><code class="prettyprint">issue_id</code> (required) - The ID of a project&rsquo;s issue</li>
+<li><code class="prettyprint">title</code> (optional) - The title of an issue</li>
+<li><code class="prettyprint">description</code> (optional) - The description of an issue</li>
+<li><code class="prettyprint">assignee_id</code> (optional) - The ID of a user to assign issue</li>
+<li><code class="prettyprint">milestone_id</code> (optional) - The ID of a milestone to assign issue</li>
+<li><code class="prettyprint">labels</code> (optional) - Comma-separated label names for an issue</li>
+<li><code class="prettyprint">state_event</code> (optional) - The state event of an issue (&lsquo;close&rsquo; to close issue and &#39;reopen&rsquo; to reopen it)</li>
+</ul>
+
+<p>If the operation is successful, 200 and the updated issue is returned.
+If an error occurs, an error number and a message explaining the reason is returned.</p>
+
+<h2 id="delete-existing-issue-deprecated">Delete existing issue (<strong>Deprecated</strong>)</h2>
+
+<p>The function is deprecated and returns a <code class="prettyprint">405 Method Not Allowed</code> error if called. An issue gets now closed and is done by calling <code class="prettyprint">PUT /projects/:id/issues/:issue_id</code> with parameter <code class="prettyprint">state_event</code> set to <code class="prettyprint">close</code>.</p>
+<pre class="highlight plaintext"><code>DELETE /projects/:id/issues/:issue_id
+</code></pre>
+
+<p>Parameters:</p>
+
+<ul>
+<li><code class="prettyprint">id</code> (required) - The project ID</li>
+<li><code class="prettyprint">issue_id</code> (required) - The ID of the issue</li>
+</ul>
+
+<h2 id="comments-on-issues">Comments on issues</h2>
+
+<p>Comments are done via the notes resource.</p>

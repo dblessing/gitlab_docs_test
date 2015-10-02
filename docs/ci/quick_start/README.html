@@ -1,0 +1,119 @@
+<h1 id="quick-start">Quick Start</h1>
+
+<p>To start building projects with GitLab CI a few steps needs to be done.</p>
+
+<h2 id="1-install-gitlab-and-ci">1. Install GitLab and CI</h2>
+
+<p>First you need to have a working GitLab and GitLab CI instance.</p>
+
+<p>You can omit this step if you use <a href="http://GitLab.com/">GitLab.com</a>.</p>
+
+<h2 id="2-create-repository-on-gitlab">2. Create repository on GitLab</h2>
+
+<p>Once you login on your GitLab add a new repository where you will store your source code.
+Push your application to that repository.</p>
+
+<h2 id="3-add-project-to-ci">3. Add project to CI</h2>
+
+<p>The next part is to login to GitLab CI.
+Point your browser to the URL you have set GitLab or use <a href="http://gitlab.com/ci/">gitlab.com/ci</a>.</p>
+
+<p>On the first screen you will see a list of GitLab&rsquo;s projects that you have access to:</p>
+
+<p><img alt="Projects" src="../../../assets/images/projects.png" /></p>
+
+<p>Click <strong>Add Project to CI</strong>.
+This will create project in CI and authorize GitLab CI to fetch sources from GitLab.</p>
+
+<blockquote>
+<p>GitLab CI creates unique token that is used to configure GitLab CI service in GitLab.
+This token allows to access GitLab&rsquo;s repository and configures GitLab to trigger GitLab CI webhook on <strong>Push events</strong> and <strong>Tag push events</strong>.
+You can see that token by going to Project&rsquo;s Settings &gt; Services &gt; GitLab CI.
+You will see there token, the same token is assigned in GitLab CI settings of project.</p>
+</blockquote>
+
+<h2 id="4-create-project-39-s-configuration-gitlab-ci-yml">4. Create project&rsquo;s configuration - .gitlab-ci.yml</h2>
+
+<p>The next: You have to define how your project will be built.
+GitLab CI uses <a href="https://en.wikipedia.org/wiki/YAML">YAML</a> file to store build configuration.
+You need to create <code class="prettyprint">.gitlab-ci.yml</code> in root directory of your repository:</p>
+<pre class="highlight yaml"><code><span class="s">before_script</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">bundle install</span>
+
+<span class="s">rspec</span><span class="pi">:</span>
+  <span class="s">script</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">bundle exec rspec</span>
+
+<span class="s">rubocop</span><span class="pi">:</span>
+  <span class="s">script</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">bundle exec rubocop</span>
+</code></pre>
+
+<p>This is the simplest possible build configuration that will work for most Ruby applications:
+1. Define two jobs <code class="prettyprint">rspec</code> and <code class="prettyprint">rubocop</code> with two different commands to be executed.
+1. Before every job execute commands defined by <code class="prettyprint">before_script</code>.</p>
+
+<p>The <code class="prettyprint">.gitlab-ci.yml</code> defines set of jobs with constrains how and when they should be run.
+The jobs are defined as top-level elements with name and always have to contain the <code class="prettyprint">script</code>.
+Jobs are used to create builds, which are then picked by <a href="../runners/README.md">runners</a> and executed within environment of the runner.
+What is important that each job is run independently from each other. </p>
+
+<p>For more information and complete <code class="prettyprint">.gitlab-ci.yml</code> syntax, please check the <a href="../yaml/README.md">Configuring project (.gitlab-ci.yml)</a>.</p>
+
+<h2 id="5-add-file-and-push-gitlab-ci-yml-to-repository">5. Add file and push .gitlab-ci.yml to repository</h2>
+
+<p>Once you created <code class="prettyprint">.gitlab-ci.yml</code> you should add it to git repository and push it to GitLab.</p>
+<pre class="highlight shell"><code>git add .gitlab-ci.yml
+git commit
+git push origin master
+</code></pre>
+
+<p>If you refresh the project&rsquo;s page on GitLab CI you will notice a one new commit:</p>
+
+<p><img src="../../../assets/images/new_commit.png" /></p>
+
+<p>However the commit has status <strong>pending</strong> which means that commit was not yet picked by runner.</p>
+
+<h2 id="6-configure-runner">6. Configure runner</h2>
+
+<p>In GitLab CI, Runners run your builds.
+A runner is a machine (can be virtual, bare-metal or VPS) that picks up builds through the coordinator API of GitLab CI.</p>
+
+<p>A runner can be specific to a certain project or serve any project in GitLab CI.
+A runner that serves all projects is called a shared runner.
+More information about different runner types can be found in <a href="../runners/README.md">Configuring runner</a>.</p>
+
+<p>To check if you have runners assigned to your project go to <strong>Runners</strong>. You will find there information how to setup project specific runner:</p>
+
+<ol>
+<li>Install GitLab Runner software. Checkout the <a href="https://about.gitlab.com/gitlab-ci/#gitlab-runner">GitLab Runner</a> section to install it.</li>
+<li>Specify following URL during runner setup: https://gitlab.com/ci/</li>
+<li>Use the following registration token during setup: TOKEN</li>
+</ol>
+
+<p>If you do it correctly your runner should be shown under <strong>Runners activated for this project</strong>:</p>
+
+<p><img src="../../../assets/images/runners_activated.png" /></p>
+
+<h3 id="shared-runners">Shared runners</h3>
+
+<p>If you use <a href="http://gitlab.com/ci/">gitlab.com/ci</a> you can use <strong>Shared runners</strong> provided by GitLab Inc.
+These are special virtual machines that are run on GitLab&rsquo;s infrastructure that can build any project.
+To enable <strong>Shared runners</strong> you have to go to <strong>Runners</strong> and click <strong>Enable shared runners</strong> for this project.</p>
+
+<h2 id="7-check-status-of-commit">7. Check status of commit</h2>
+
+<p>If everything went OK and you go to commit, the status of the commit should change from <strong>pending</strong> to either <strong>running</strong>, <strong>success</strong> or <strong>failed</strong>.</p>
+
+<p><img src="../../../assets/images/commit_status.png" /></p>
+
+<p>You can click <strong>Build ID</strong> to view build log for specific job.</p>
+
+<h2 id="8-congratulations">8. Congratulations!</h2>
+
+<p>You managed to build your first project using GitLab CI.
+You may need to tune your <code class="prettyprint">.gitlab-ci.yml</code> file to implement build plan for your project.
+A few examples how it can be done you can find on <a href="../examples/README.md">Examples</a> page.</p>
+
+<p>GitLab CI also offers <strong>the Lint</strong> tool to verify validity of your <code class="prettyprint">.gitlab-ci.yml</code> which can be useful to troubleshoot potential problems.
+The Lint is available from project&rsquo;s settings or by adding <code class="prettyprint">/lint</code> to GitLab CI url.</p>

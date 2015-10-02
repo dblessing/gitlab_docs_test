@@ -1,0 +1,203 @@
+<h1 id="gitlab-api">GitLab API</h1>
+
+<h2 id="resources">Resources</h2>
+
+<ul>
+<li><a href="users.md">Users</a></li>
+<li><a href="session.md">Session</a></li>
+<li><a href="projects.md">Projects</a> including setting Webhooks</li>
+<li><a href="project_snippets.md">Project Snippets</a></li>
+<li><a href="services.md">Services</a></li>
+<li><a href="repositories.md">Repositories</a></li>
+<li><a href="repository_files.md">Repository Files</a></li>
+<li><a href="commits.md">Commits</a></li>
+<li><a href="branches.md">Branches</a></li>
+<li><a href="merge_requests.md">Merge Requests</a></li>
+<li><a href="issues.md">Issues</a></li>
+<li><a href="labels.md">Labels</a></li>
+<li><a href="milestones.md">Milestones</a></li>
+<li><a href="notes.md">Notes</a> (comments)</li>
+<li><a href="deploy_keys.md">Deploy Keys</a></li>
+<li><a href="system_hooks.md">System Hooks</a></li>
+<li><a href="groups.md">Groups</a></li>
+<li><a href="namespaces.md">Namespaces</a></li>
+<li><a href="settings.md">Settings</a></li>
+<li><a href="keys.md">Keys</a></li>
+</ul>
+
+<h2 id="clients">Clients</h2>
+
+<p>Find API Clients for GitLab <a href="https://about.gitlab.com/applications/#api-clients">on our website</a>.
+You can use <a href="oauth2.md">GitLab as an OAuth2 client</a> to make API calls.</p>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>All API requests require authentication. You need to pass a <code class="prettyprint">private_token</code> parameter by URL or header. If passed as header, the header name must be &ldquo;PRIVATE-TOKEN&rdquo; (capital and with dash instead of underscore). You can find or reset your private token in your profile.</p>
+
+<p>If no, or an invalid, <code class="prettyprint">private_token</code> is provided then an error message will be returned with status code 401:</p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"401 Unauthorized"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>API requests should be prefixed with <code class="prettyprint">api</code> and the API version. The API version is defined in <code class="prettyprint">lib/api.rb</code>.</p>
+
+<p>Example of a valid API request:</p>
+<pre class="highlight plaintext"><code>GET http://example.com/api/v3/projects?private_token=QVy1PB7sTxfy4pqfZM1U
+</code></pre>
+
+<p>Example for a valid API request using curl and authentication via header:</p>
+<pre class="highlight plaintext"><code>curl --header "PRIVATE-TOKEN: QVy1PB7sTxfy4pqfZM1U" "http://example.com/api/v3/projects"
+</code></pre>
+
+<p>The API uses JSON to serialize data. You don&rsquo;t need to specify <code class="prettyprint">.json</code> at the end of API URL.</p>
+
+<h2 id="authentication-with-oauth2-token">Authentication with OAuth2 token</h2>
+
+<p>Instead of the private_token you can transmit the OAuth2 access token as a header or as a parameter.</p>
+
+<h3 id="oauth2-token-as-a-parameter">OAuth2 token (as a parameter)</h3>
+<pre class="highlight plaintext"><code>curl https://localhost:3000/api/v3/user?access_token=OAUTH-TOKEN
+</code></pre>
+
+<h3 id="oauth2-token-as-a-header">OAuth2 token (as a header)</h3>
+<pre class="highlight plaintext"><code>curl -H "Authorization: Bearer OAUTH-TOKEN" https://localhost:3000/api/v3/user
+</code></pre>
+
+<p>Read more about <a href="oauth2.md">GitLab as an OAuth2 client</a>.</p>
+
+<h2 id="status-codes">Status codes</h2>
+
+<p>The API is designed to return different status codes according to context and action. In this way if a request results in an error the caller is able to get insight into what went wrong, e.g. status code <code class="prettyprint">400 Bad Request</code> is returned if a required attribute is missing from the request. The following list gives an overview of how the API functions generally behave.</p>
+
+<p>API request types:</p>
+
+<ul>
+<li><code class="prettyprint">GET</code> requests access one or more resources and return the result as JSON</li>
+<li><code class="prettyprint">POST</code> requests return <code class="prettyprint">201 Created</code> if the resource is successfully created and return the newly created resource as JSON</li>
+<li><code class="prettyprint">GET</code>, <code class="prettyprint">PUT</code> and <code class="prettyprint">DELETE</code> return <code class="prettyprint">200 OK</code> if the resource is accessed, modified or deleted successfully, the (modified) result is returned as JSON</li>
+<li><code class="prettyprint">DELETE</code> requests are designed to be idempotent, meaning a request a resource still returns <code class="prettyprint">200 OK</code> even it was deleted before or is not available. The reasoning behind it is the user is not really interested if the resource existed before or not.</li>
+</ul>
+
+<p>The following list shows the possible return codes for API requests.</p>
+
+<p>Return values:</p>
+
+<ul>
+<li><code class="prettyprint">200 OK</code> - The <code class="prettyprint">GET</code>, <code class="prettyprint">PUT</code> or <code class="prettyprint">DELETE</code> request was successful, the resource(s) itself is returned as JSON</li>
+<li><code class="prettyprint">201 Created</code> - The <code class="prettyprint">POST</code> request was successful and the resource is returned as JSON</li>
+<li><code class="prettyprint">400 Bad Request</code> - A required attribute of the API request is missing, e.g. the title of an issue is not given</li>
+<li><code class="prettyprint">401 Unauthorized</code> - The user is not authenticated, a valid user token is necessary, see above</li>
+<li><code class="prettyprint">403 Forbidden</code> - The request is not allowed, e.g. the user is not allowed to delete a project</li>
+<li><code class="prettyprint">404 Not Found</code> - A resource could not be accessed, e.g. an ID for a resource could not be found</li>
+<li><code class="prettyprint">405 Method Not Allowed</code> - The request is not supported</li>
+<li><code class="prettyprint">409 Conflict</code> - A conflicting resource already exists, e.g. creating a project with a name that already exists</li>
+<li><code class="prettyprint">422 Unprocessable</code> - The entity could not be processed</li>
+<li><code class="prettyprint">500 Server Error</code> - While handling the request something went wrong on the server side</li>
+</ul>
+
+<h2 id="sudo">Sudo</h2>
+
+<p>All API requests support performing an api call as if you were another user, if your private token is for an administration account. You need to pass  <code class="prettyprint">sudo</code> parameter by URL or header with an id or username of the user you want to perform the operation as. If passed as header, the header name must be &ldquo;SUDO&rdquo; (capitals).</p>
+
+<p>If a non administrative <code class="prettyprint">private_token</code> is provided then an error message will be returned with status code 403:</p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"403 Forbidden: Must be admin to use sudo"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>If the sudo user id or username cannot be found then an error message will be returned with status code 404:</p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"404 Not Found: No user id or username for: &lt;id/username&gt;"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>Example of a valid API with sudo request:</p>
+<pre class="highlight plaintext"><code>GET http://example.com/api/v3/projects?private_token=QVy1PB7sTxfy4pqfZM1U&amp;sudo=username
+</code></pre>
+<pre class="highlight plaintext"><code>GET http://example.com/api/v3/projects?private_token=QVy1PB7sTxfy4pqfZM1U&amp;sudo=23
+</code></pre>
+
+<p>Example for a valid API request with sudo using curl and authentication via header:</p>
+<pre class="highlight plaintext"><code>curl --header "PRIVATE-TOKEN: QVy1PB7sTxfy4pqfZM1U" --header "SUDO: username" "http://example.com/api/v3/projects"
+</code></pre>
+<pre class="highlight plaintext"><code>curl --header "PRIVATE-TOKEN: QVy1PB7sTxfy4pqfZM1U" --header "SUDO: 23" "http://example.com/api/v3/projects"
+</code></pre>
+
+<h2 id="pagination">Pagination</h2>
+
+<p>When listing resources you can pass the following parameters:</p>
+
+<ul>
+<li><code class="prettyprint">page</code> (default: <code class="prettyprint">1</code>) - page number</li>
+<li><code class="prettyprint">per_page</code> (default: <code class="prettyprint">20</code>, max: <code class="prettyprint">100</code>) - number of items to list per page</li>
+</ul>
+
+<p><a href="http://www.w3.org/wiki/LinkHeader">Link headers</a> are send back with each response. These have <code class="prettyprint">rel</code> prev/next/first/last and contain the relevant URL. Please use these instead of generating your own URLs.</p>
+
+<h2 id="id-vs-iid">id vs iid</h2>
+
+<p>When you work with API you may notice two similar fields in api entities: id and iid. The main difference between them is scope. Example:</p>
+
+<p>Issue:</p>
+
+<p>id: 46
+    iid: 5</p>
+
+<ul>
+<li>id - is unique across all issues. It&rsquo;s used for any api call.</li>
+<li>iid - is unique only in scope of a single project. When you browse issues or merge requests with Web UI, you see iid.</li>
+</ul>
+
+<p>So if you want to get issue with api you use <code class="prettyprint">http://host/api/v3/.../issues/:id.json</code>. But when you want to create a link to web page - use  <code class="prettyprint">http:://host/project/issues/:iid.json</code></p>
+
+<h2 id="data-validation-and-error-reporting">Data validation and error reporting</h2>
+
+<p>When working with the API you may encounter validation errors. In such case, the API will answer with an HTTP <code class="prettyprint">400</code> status.
+Such errors appear in two cases:</p>
+
+<ul>
+<li>A required attribute of the API request is missing, e.g. the title of an issue is not given</li>
+<li>An attribute did not pass the validation, e.g. user bio is too long</li>
+</ul>
+
+<p>When an attribute is missing, you will get something like:</p>
+
+<p>HTTP/1.1 400 Bad Request
+    Content-Type: application/json</p>
+
+<p>{
+        &ldquo;message&rdquo;:&ldquo;400 (Bad request) \&quot;title\&rdquo; not given&quot;
+    }</p>
+
+<p>When a validation error occurs, error messages will be different. They will hold all details of validation errors:</p>
+
+<p>HTTP/1.1 400 Bad Request
+    Content-Type: application/json</p>
+
+<p>{
+        &ldquo;message&rdquo;: {
+            &ldquo;bio&rdquo;: [
+                &ldquo;is too long (maximum is 255 characters)&rdquo;
+            ]
+        }
+    }</p>
+
+<p>This makes error messages more machine-readable. The format can be described as follow:</p>
+
+<p>{
+        &ldquo;message&rdquo;: {
+            &ldquo;<property-name>&rdquo;: [
+                &ldquo;<error-message>&rdquo;,
+                &ldquo;<error-message>&rdquo;,
+                &hellip;
+            ],
+            &ldquo;<embed-entity>&rdquo;: {
+                &ldquo;<property-name>&rdquo;: [
+                    &ldquo;<error-message>&rdquo;,
+                    &ldquo;<error-message>&rdquo;,
+                    &hellip;
+                ],
+            }
+        }
+    }</p>

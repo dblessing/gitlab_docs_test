@@ -1,0 +1,75 @@
+<h1 id="runners-api">Runners API</h1>
+
+<h2 id="runners">Runners</h2>
+
+<h3 id="retrieve-all-runners">Retrieve all runners</h3>
+
+<p><strong>Authentication is done by GitLab user token &amp; GitLab url</strong></p>
+
+<p>Used to get information about all runners registered on the Gitlab CI
+instance.</p>
+
+<p>GET /ci/runners</p>
+
+<p>Returns:</p>
+<pre class="highlight json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">85</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"token"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"12b68e90394084703135"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">86</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"token"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"76bf894e969364709864"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<h3 id="register-a-new-runner">Register a new runner</h3>
+
+<p><strong>Authentication is done with a Shared runner registration token or a project Specific runner registration token</strong></p>
+
+<p>Used to make Gitlab CI aware of available runners.</p>
+
+<p>POST /ci/runners/register</p>
+
+<p>Parameters:</p>
+
+<ul>
+<li><code class="prettyprint">token</code> (required) - The registration token. It is 2 types of token you can pass here. </li>
+</ul>
+
+<ol>
+<li>Shared runner registration token</li>
+<li>Project specific registration token</li>
+</ol>
+
+<p>Returns:</p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">85</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"token"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"12b68e90394084703135"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="delete-a-runner">Delete a runner</h3>
+
+<p><strong>Authentication is done by runner token</strong></p>
+
+<p>Used to removing runners.</p>
+
+<p>DELETE /ci/runners/delete</p>
+
+<p>Parameters:</p>
+
+<ul>
+<li><code class="prettyprint">token</code> (required) - The runner token.</li>
+</ul>
+
+<p>Returns:</p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"token"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"d14963981a428f70121777e50643d1"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"created_at"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-26T11:39:39.232Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"updated_at"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-26T11:39:39.232Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"awesome runner"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>

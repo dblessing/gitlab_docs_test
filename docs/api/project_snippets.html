@@ -1,0 +1,134 @@
+<h1 id="project-snippets">Project snippets</h1>
+
+<h3 id="snippet-visibility-level">Snippet visibility level</h3>
+
+<p>Snippets in GitLab can be either private, internal or public.
+You can set it with the <code class="prettyprint">visibility_level</code> field in the snippet.</p>
+
+<p>Constants for snippet visibility levels are:</p>
+
+<table><thead>
+<tr>
+<th>Visibility</th>
+<th>visibility_level</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Private</td>
+<td><code class="prettyprint">0</code></td>
+<td>The snippet is visible only the snippet creator</td>
+</tr>
+<tr>
+<td>Internal</td>
+<td><code class="prettyprint">10</code></td>
+<td>The snippet is visible for any logged in user</td>
+</tr>
+<tr>
+<td>Public</td>
+<td><code class="prettyprint">20</code></td>
+<td>The snippet can be accessed without any authentication</td>
+</tr>
+</tbody></table>
+
+<h2 id="list-snippets">List snippets</h2>
+
+<p>Get a list of project snippets.</p>
+<pre class="highlight plaintext"><code>GET /projects/:id/snippets
+</code></pre>
+
+<p>Parameters:</p>
+
+<ul>
+<li><code class="prettyprint">id</code> (required) - The ID of a project</li>
+</ul>
+
+<h2 id="single-snippet">Single snippet</h2>
+
+<p>Get a single project snippet.</p>
+<pre class="highlight plaintext"><code>GET /projects/:id/snippets/:snippet_id
+</code></pre>
+
+<p>Parameters:</p>
+
+<ul>
+<li><code class="prettyprint">id</code> (required) - The ID of a project</li>
+<li><code class="prettyprint">snippet_id</code> (required) - The ID of a project&rsquo;s snippet</li>
+</ul>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"file_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"add.rb"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"author"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john_smith"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john@example.com"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John Smith"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-05-23T08:00:58Z"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"expires_at"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-06-28T10:52:04Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-06-28T10:52:04Z"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h2 id="create-new-snippet">Create new snippet</h2>
+
+<p>Creates a new project snippet. The user must have permission to create new snippets.</p>
+<pre class="highlight plaintext"><code>POST /projects/:id/snippets
+</code></pre>
+
+<p>Parameters:</p>
+
+<ul>
+<li><code class="prettyprint">id</code> (required) - The ID of a project</li>
+<li><code class="prettyprint">title</code> (required) - The title of a snippet</li>
+<li><code class="prettyprint">file_name</code> (required) - The name of a snippet file</li>
+<li><code class="prettyprint">code</code> (required) - The content of a snippet</li>
+<li><code class="prettyprint">visibility_level</code> (required) - The snippet&rsquo;s visibility</li>
+</ul>
+
+<h2 id="update-snippet">Update snippet</h2>
+
+<p>Updates an existing project snippet. The user must have permission to change an existing snippet.</p>
+<pre class="highlight plaintext"><code>PUT /projects/:id/snippets/:snippet_id
+</code></pre>
+
+<p>Parameters:</p>
+
+<ul>
+<li><code class="prettyprint">id</code> (required) - The ID of a project</li>
+<li><code class="prettyprint">snippet_id</code> (required) - The ID of a project&rsquo;s snippet</li>
+<li><code class="prettyprint">title</code> (optional) - The title of a snippet</li>
+<li><code class="prettyprint">file_name</code> (optional) - The name of a snippet file</li>
+<li><code class="prettyprint">code</code> (optional) - The content of a snippet</li>
+<li><code class="prettyprint">visibility_level</code> (optional) - The snippet&rsquo;s visibility</li>
+</ul>
+
+<h2 id="delete-snippet">Delete snippet</h2>
+
+<p>Deletes an existing project snippet. This is an idempotent function and deleting a non-existent
+snippet still returns a <code class="prettyprint">200 OK</code> status code.</p>
+<pre class="highlight plaintext"><code>DELETE /projects/:id/snippets/:snippet_id
+</code></pre>
+
+<p>Parameters:</p>
+
+<ul>
+<li><code class="prettyprint">id</code> (required) - The ID of a project</li>
+<li><code class="prettyprint">snippet_id</code> (required) - The ID of a project&rsquo;s snippet</li>
+</ul>
+
+<h2 id="snippet-content">Snippet content</h2>
+
+<p>Returns the raw project snippet as plain text.</p>
+<pre class="highlight plaintext"><code>GET /projects/:id/snippets/:snippet_id/raw
+</code></pre>
+
+<p>Parameters:</p>
+
+<ul>
+<li><code class="prettyprint">id</code> (required) - The ID of a project</li>
+<li><code class="prettyprint">snippet_id</code> (required) - The ID of a project&rsquo;s snippet</li>
+</ul>
