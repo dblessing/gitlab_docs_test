@@ -1,3 +1,5 @@
+set :source, ''
+
 # Markdown
 set :markdown_engine, :redcarpet
 set :markdown,
@@ -10,10 +12,11 @@ set :markdown,
     no_intra_emphasis: true
 
 # Assets
-set :css_dir, 'stylesheets'
-set :js_dir, 'javascripts'
-set :images_dir, 'images'
-set :fonts_dir, 'fonts'
+set :css_dir, 'assets/stylesheets'
+set :js_dir, 'assets/javascripts'
+set :images_dir, 'assets/images'
+set :fonts_dir, 'assets/fonts'
+set :layouts_dir, 'layouts'
 
 # Activate the syntax highlighter
 activate :syntax
@@ -25,8 +28,8 @@ activate :autoprefixer do |config|
 end
 
 # Github pages require relative links
-activate :relative_assets
-set :relative_links, true
+# activate :relative_assets
+# set :relative_links, true
 
 # Build Configuration
 configure :build do
