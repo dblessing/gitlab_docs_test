@@ -16,7 +16,8 @@ set :css_dir, 'assets/stylesheets'
 set :js_dir, 'assets/javascripts'
 set :images_dir, 'assets/images'
 set :fonts_dir, 'assets/fonts'
-set :layouts_dir, 'layouts'
+set :layouts_dir, 'assets/layouts'
+set :layout_dir, 'assets/layouts'
 
 # Activate the syntax highlighter
 activate :syntax
